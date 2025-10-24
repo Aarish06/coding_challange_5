@@ -1,6 +1,6 @@
 import express, { Express, Request, Response } from 'express';
 import moderationRoutes from './api/v1/routes/moderationRoutes';
-import * as swaggerConfig from './config/swagger';
+import { setupSwagger } from './config/swagger';
 
 /**
  * Create and configure Express application
@@ -18,7 +18,7 @@ app.use('/api/v1/moderation', moderationRoutes);
 /**
  * Setup Swagger documentation
  */
-swaggerConfig.setupSwagger(app);
+setupSwagger(app);
 
 /**
  * Default error handler for unmatched routes
