@@ -1,27 +1,30 @@
-import express, { Express, Request, Response } from "express";
-import moderationRoutes from "./api/v1/routes/moderationRoutes";
-import { swaggerUi, swaggerSpec } from './config/swagger';
+import express, { Express, Request, Response } from 'express';
+import moderationRoutes from './api/v1/routes/moderationRoutes';
+import * as swaggerConfig from './config/swagger';
 
+/**
+ * Create and configure Express application
+ */
 const app: Express = express();
+
+// Middleware
 app.use(express.json());
 
 /**
  * Mount moderation routes on /api/v1/moderation
  */
-app.use("/api/v1/moderation", moderationRoutes);
+app.use('/api/v1/moderation', moderationRoutes);
 
 /**
  * Setup Swagger documentation
  */
-setupSwagger(app);
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
-
+swaggerConfig.setupSwagger(app);
 
 /**
  * Default error handler for unmatched routes
  */
 app.use((req: Request, res: Response): void => {
-    res.status(404).json({ message: "Endpoint not found" });
+  res.status(404).json({ message: 'Endpoint not found' });
 });
 
 export default app;
